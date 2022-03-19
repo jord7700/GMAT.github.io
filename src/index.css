@@ -22,3 +22,9 @@ body {
   width: 60px;
   height: 56px;
 }
+
+#numDice {
+  padding: 0px;
+  width: 36px;
+  height: 56px;
+}

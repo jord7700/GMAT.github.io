@@ -5,6 +5,28 @@ class Dice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      diceCollection: [
+        {
+          val: 4, 
+          numDice: 0,
+        },
+        {
+          val: 6, 
+          numDice: 0,
+        }, 
+        {
+          val: 8, 
+          numDice: 0,
+        },
+        {
+          val: 12, 
+          numDice: 0,
+        },
+        {
+          val: 20, 
+          numDice: 0,
+        },
+      ],
       modifierTotal: 0,
       results: 0,
       rollStr: 'firstRoll'
@@ -19,7 +41,8 @@ class Dice extends React.Component {
     });
   }
 
-  handleClick(value){
+  handleClick(value, numDice){
+    console.log(numDice);
     // eslint-disable-next-line
     const randVal = Math.floor(Math.random() * (parseInt(value))) + 1;
     const retVal = randVal + this.state.modifierTotal;
@@ -31,12 +54,13 @@ class Dice extends React.Component {
       } else if(this.state.modifierTotal < 0){
         return 'D' + value + ' - ' + Math.abs(this.state.modifierTotal);
       }
-    }
+    };
     this.setState({
       results: retVal,
       rollStr: rollStr()
     });
   }
+
   render() {
     return (
       <div 
@@ -44,17 +68,17 @@ class Dice extends React.Component {
           hidden={this.props.hidden}>
           <p>in dice</p>
           <div className='DieSelector'>
-            <Die onClick={this.handleClick} value='4'>d4</Die>
-            <Die onClick={this.handleClick} value='6'>d6</Die>
-            <Die onClick={this.handleClick} value='8'>d8</Die>
-            <Die onClick={this.handleClick} value='12'>d12</Die>
-            <Die onClick={this.handleClick} value='20'>d20</Die>
+            {
+              [...this.state.diceCollection].map((e, i) =>
+                <Die key={i} onClick={this.handleClick} value={e.val}>d{e.val}</Die>
+              )
+            }
             <div className='Modifiers'>
               <input 
                 id="modifier"
                 type="number" 
-                onChange={this.handleChange} 
-                value={this.state.modifierTotal} 
+                onChange={this.handleChange}
+                value={this.state.modifierTotal}
                 />
             </div>
           </div>
