@@ -11,9 +11,11 @@ export default function Die(props) {
         type="number"
         max='99'
         min='1'
+        onChange={props.onChange}
+        value={props.diceCount}
       />
       <button
-      onClick={() => handleClick(props.value)}>
+      onClick={() => handleClick()}>
         D{props.value}
       </button>
     </div>
