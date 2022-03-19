@@ -9,8 +9,8 @@ export default function TopBar(props) {
         onChange={props.onChange}
         aria-label="secondary tabs"
       >
-        <Tab value="one" label="Item One" />
-        <Tab value="two" label="Item Two" />
+        <Tab value="one" label="Dice" />
+        <Tab value="two" label="Initiative Tracker" />
         <Tab value="three" label="Item Three" />
       </Tabs>
     </Box>

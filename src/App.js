@@ -1,6 +1,7 @@
 import React from 'react';
 import TopBar from './Components/TopBar/TopBar';
 import Dice from './Components/Dice/Dice';
+//import Die from './Components/Die/Die';
 import './App.css';
 
 class App extends React.Component {
