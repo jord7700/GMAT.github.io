@@ -90,38 +90,39 @@ class Dice extends React.Component {
   render() {
     return (
       <div
-          className="Dice"
-          hidden={this.props.hidden}>
-          <div className='DieSelector'>
-            <button
-              className='DieButton'
-              onClick={this.resetDice}>
-                Reset All Dice
-            </button>
-            {
-              [...this.state.diceCollection].map((e, i) =>
-                <Die
-                  key={i}
-                  onChange={this.handleDieCount}
-                  onClick={this.handleClick}
-                  index={i}
-                  diceCount={e.numDice}
-                  value={e.val}
-                />
-              )
-            }
-            <div className='Modifiers'>
-              <input 
-                id="modifier"
-                type="number" 
-                onChange={this.handleChange}
-                value={this.state.modifierTotal}
-                />
-            </div>
+        className="Dice"
+        style={{display: this.props.hidden === false ? 'grid' : 'none'}}
+      >
+        <div className='DieSelector'>
+          <button
+            className='DieButton'
+            onClick={this.resetDice}>
+              Reset All Dice
+          </button>
+          {
+            [...this.state.diceCollection].map((e, i) =>
+              <Die
+                key={i}
+                onChange={this.handleDieCount}
+                onClick={this.handleClick}
+                index={i}
+                diceCount={e.numDice}
+                value={e.val}
+              />
+            )
+          }
+          <div className='Modifiers'>
+            <input 
+              id="modifier"
+              type="number" 
+              onChange={this.handleChange}
+              value={this.state.modifierTotal}
+              />
           </div>
-          <div className='Results'>
-            <p>{this.state.rollStr}: {this.state.results}</p>
-          </div>
+        </div>
+        <div className='Results'>
+          <p>{this.state.rollStr}: {this.state.results}</p>
+        </div>
       </div>
     );
   }
