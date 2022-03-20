@@ -92,13 +92,12 @@ class Dice extends React.Component {
       <div
           className="Dice"
           hidden={this.props.hidden}>
-          <p>in dice</p>
           <div className='DieSelector'>
-          <button
-            className='DieButton'
-            onClick={this.resetDice}>
-              Reset All Dice
-          </button>
+            <button
+              className='DieButton'
+              onClick={this.resetDice}>
+                Reset All Dice
+            </button>
             {
               [...this.state.diceCollection].map((e, i) =>
                 <Die

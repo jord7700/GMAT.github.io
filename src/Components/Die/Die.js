@@ -14,15 +14,16 @@ export default function Die(props) {
       <Button 
         variant="outlined" 
         className='DieAdd' 
+        size="small"
         onClick={() => changeDieCount(1)}
-        key='0'>
+      >
           <span className="material-icons">add</span>
       </Button>
       <Button 
         variant="outlined" 
         className='DieSub' 
         onClick={() => changeDieCount(-1)}
-        key='1'>
+      >
         <span className="material-icons">remove</span>
       </Button>
       <button
