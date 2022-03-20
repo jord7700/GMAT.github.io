@@ -70,10 +70,11 @@ class Dice extends React.Component {
     });
   }
 
-  handleDieCount(event, index){
+  handleDieCount(value, index){
+    console.log(value + ' ' + index);
     let items = [...this.state.diceCollection];
     let item = {...items[index]};
-    item.numDice = parseInt(event.target.value, 10);
+    item.numDice = parseInt(value, 10) + item.numDice === 0 ? 1 : parseInt(value, 10) + item.numDice;
     items[index] = item;
     this.setState({diceCollection: items});
   }
@@ -89,7 +90,7 @@ class Dice extends React.Component {
               [...this.state.diceCollection].map((e, i) =>
                 <Die
                   key={i}
-                  onChange={(e) => this.handleDieCount(e, i)}
+                  onChange={this.handleDieCount}
                   onClick={this.handleClick}
                   index={i}
                   diceCount={e.numDice}

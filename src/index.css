@@ -6,15 +6,33 @@ body {
 }
 
 /* Dice */
+.Die {
+  display: grid;
+  height: auto;
+  grid-template: 
+  "add roll"
+  "sub roll";
+}
+.DieAdd {
+  height: 30px;
+  grid-area: add
+}
+
+.DieSub {
+  height: 30px;
+  grid-area: sub;
+}
 .DieSelector {
   display: flex;
   justify-content: center;
+  height: 60px;
 }
 
-.DieSelector button {
+.DieButton {
   padding: 0px;
   width: 60px;
   height: 60px;
+  grid-area: roll;
 }
 
 .DieSelector input {
