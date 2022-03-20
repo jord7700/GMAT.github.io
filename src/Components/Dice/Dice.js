@@ -34,6 +34,7 @@ class Dice extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleDieCount = this.handleDieCount.bind(this);
+    this.resetDice = this.resetDice.bind(this);
   }
 
   handleChange(event) {
@@ -71,11 +72,18 @@ class Dice extends React.Component {
   }
 
   handleDieCount(value, index){
-    console.log(value + ' ' + index);
     let items = [...this.state.diceCollection];
     let item = {...items[index]};
     item.numDice = parseInt(value, 10) + item.numDice === 0 ? 1 : parseInt(value, 10) + item.numDice;
     items[index] = item;
+    this.setState({diceCollection: items});
+  }
+
+  resetDice(){
+    const items = [...this.state.diceCollection];
+    items.forEach(element => {
+      element.numDice = 1
+    });
     this.setState({diceCollection: items});
   }
 
@@ -86,6 +94,11 @@ class Dice extends React.Component {
           hidden={this.props.hidden}>
           <p>in dice</p>
           <div className='DieSelector'>
+          <button
+            className='DieButton'
+            onClick={this.resetDice}>
+              Reset All Dice
+          </button>
             {
               [...this.state.diceCollection].map((e, i) =>
                 <Die
