@@ -28,13 +28,15 @@ class Dice extends React.Component {
         },
       ],
       modifierTotal: 0,
-      results: 0,
-      rollStr: 'firstRoll'
+      history: []
+      // results: 0,
+      // rollStr: 'firstRoll'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleDieCount = this.handleDieCount.bind(this);
     this.resetDice = this.resetDice.bind(this);
+    this.clearHistory = this.clearHistory.bind(this);
   }
 
   handleChange(event) {
@@ -50,7 +52,6 @@ class Dice extends React.Component {
       retVal = 0;
       for(let i = 0; i < diceCount; i++){
         const newVal = Math.floor(Math.random() * (parseInt(value, 10))) + 1;
-        console.log(newVal);
         retVal += newVal;
       }
       return retVal;
@@ -66,8 +67,10 @@ class Dice extends React.Component {
       }
     };
     this.setState({
-      results: retVal,
-      rollStr: rollStr()
+      history: this.state.history.concat([{
+        results: retVal,
+        rollStr: rollStr()
+      }])
     });
   }
 
@@ -87,7 +90,20 @@ class Dice extends React.Component {
     this.setState({diceCollection: items});
   }
 
+  clearHistory(){
+    this.setState({
+      history: []
+    })
+  }
+
   render() {
+    const history = this.state.history;
+    const current = history[history.length -1];
+    const rollList = history.map((roll, index) => {
+      return(
+        <p key={index}>{roll.rollStr} : {roll.results}</p>
+      );
+    });
     return (
       <div
         className="Dice"
@@ -120,8 +136,18 @@ class Dice extends React.Component {
               />
           </div>
         </div>
+        <div className='RollHistory'>
+          <button
+            className='HistoryButton'
+            onClick={this.clearHistory}>
+              Reset History
+          </button>
+          {rollList}
+        </div>
         <div className='Results'>
-          <p>{this.state.rollStr}: {this.state.results}</p>
+          {current && 
+          <p><span>{current.rollStr} : {current.results}</span></p>
+          }
         </div>
       </div>
     );

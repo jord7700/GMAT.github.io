@@ -8,7 +8,8 @@ body {
 /* Dice */
 .Dice {
   display: grid;
-  grid-template: "selector results";
+  grid-template-columns: 80px 160px auto;
+  /* grid-template: "selector history results"; */
 }
 .Die {
   display: grid;
@@ -50,4 +51,25 @@ body {
   padding: 0px;
   width: 36px;
   height: 56px;
+}
+
+.RollHistory {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+}
+
+.RollHistory button {
+  height: 60px;
+}
+
+.RollHistory p {
+  margin: 10px;
+}
+
+.Results p span {
+  width: auto;
+  padding: 8px;
+  background-color: beige;
 }
