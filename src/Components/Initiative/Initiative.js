@@ -1,6 +1,5 @@
 import * as React from 'react';
 import InitiativeBar from './InitiativeBar/InitiativeBar';
-import { Box, Button, TextField } from '@material-ui/core';
 import Groups from './Groups/Groups';
 
 class Initiative extends React.Component {
