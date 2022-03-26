@@ -7,11 +7,13 @@ body {
 
 /* Dice */
 .Dice {
+  padding: 12px;
   display: grid;
   grid-template-columns: 80px 160px auto;
   /* grid-template: "selector history results"; */
 }
 .Die {
+  padding-top: 6px;
   display: grid;
   height: auto;
   width: 80px;
@@ -72,4 +74,21 @@ body {
   width: auto;
   padding: 8px;
   background-color: beige;
+}
+
+/* Initiative */
+.Initiative {
+  padding: 12px;
+}
+
+.AddGroupButton {
+  width: 100%;
+}
+
+.NarrowTextField {
+  width: 94px;
+}
+
+#TrackGroup {
+  margin-top: 6px;
 }

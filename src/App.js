@@ -1,14 +1,14 @@
 import React from 'react';
 import TopBar from './Components/TopBar/TopBar';
 import Dice from './Components/Dice/Dice';
-//import Die from './Components/Die/Die';
+import Initiative from './Components/Initiative/Initiative';
 import './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'one',
+      tab: 'two',
     }
   }
 
@@ -28,7 +28,7 @@ class App extends React.Component {
           />
         </div>
         <Dice hidden={tab!=='one'}/>
-        <p hidden={tab!=='two'}>initiative</p>
+        <Initiative hidden={tab!=='two'}>initiative</Initiative>
         <p hidden={tab!=='three'}>rules</p>
       </div>
     );
