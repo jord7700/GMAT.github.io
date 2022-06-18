@@ -89,6 +89,10 @@ body {
   width: 94px;
 }
 
+.GroupBox {
+  margin-top: 6px;
+}
+
 #TrackGroup {
   margin-top: 6px;
 }

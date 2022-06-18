@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core';
 export default function Die(props) {
   const changeDieCount = (value) => {
     props.onChange(value, props.index);
-  }
+  };
   const handleClick = () => {
     props.onClick(props.value)
   };
