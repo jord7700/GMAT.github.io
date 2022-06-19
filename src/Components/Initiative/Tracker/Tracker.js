@@ -2,7 +2,36 @@ import * as React from 'react';
 import { Grid, Paper, styled } from '@material-ui/core';
 
 export default function Tracker(props) {
-    const groups = props.groups;
+    // const groups = props.groups;
+    // const party = props.party;
+    // create local copy of groups and party
+    const allUnits = (() => {
+        const retArray = [];
+        props.groups.forEach((unit, index) => {
+            if(unit.track){
+                for(let i = 0; i < unit.count; i++){
+                    retArray.push({
+                        name: `${unit.name} (${i + 1})`,
+                        health: unit.health,
+                        bonus: unit.bonus
+                    });
+                }
+            }
+        });
+        props.party.forEach((unit, index) => {
+            if(unit.track && unit.name !== ''){
+                retArray.push({
+                    name: `${unit.name}`,
+                    health: unit.health,
+                    bonus: unit.bonus
+                });
+            }
+        });
+        return retArray;
+    })()
+
+    // const allUnits = allUnitsFunc(props.groups, props.party);
+    
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
         textAlign: 'center',
@@ -20,11 +49,11 @@ export default function Tracker(props) {
             </Grid>
         </Grid>
     );
-    const groupBox = (group, index) => (
-        <div className='GroupBox' key={group.name + index}>
+    const groupBox = (group) => (
+        <div className='GroupBox' key={group.name}>
             <Grid container spacing={2}>
                 <Grid item xs={2}>
-                    <Item>{group.name} ({index + 1})</Item>
+                    <Item>{group.name}</Item>
                 </Grid>
                 <Grid item xs={1}>
                     <Item>{group.health}</Item>
@@ -39,16 +68,12 @@ export default function Tracker(props) {
             style={{display: props.hidden === false ? 'grid' : 'none'}}
         >
             {headerGrid}
-            {groups.map((group) => {
-                if(group.track){
-                    const allUnits = [];
-                    for(let i = 0; i < group.count; i++){
-                        allUnits.push(groupBox(group, i));
-                    }
-                    return allUnits;
-                }
-                return '';
-            })}
+            {allUnits.map((group) => {
+                const displayedUnits = [];
+                displayedUnits.push(groupBox(group));
+                return displayedUnits;
+            })
+            }
         </div>
     );
 }
