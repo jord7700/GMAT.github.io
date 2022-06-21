@@ -89,6 +89,10 @@ body {
   width: 94px;
 }
 
+.ShortTextField {
+  height: 32px;
+}
+
 .GroupBox {
   margin-top: 6px;
 }

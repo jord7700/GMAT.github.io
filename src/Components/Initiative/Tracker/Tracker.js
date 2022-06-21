@@ -1,36 +1,60 @@
 import * as React from 'react';
-import { Grid, Paper, styled } from '@material-ui/core';
+import { Button, Grid, Paper, styled } from '@material-ui/core';
+import InitBox from './InitBox/InitBox';
 
-export default function Tracker(props) {
-    // const groups = props.groups;
-    // const party = props.party;
+export default function Tracker({groups, party, hidden}) {
     // create local copy of groups and party
-    const allUnits = (() => {
+    const [localHidden, sethidden] = React.useState(hidden);
+    const [allUnits, setUnits] = React.useState([]);
+
+    const updateUnits = () => {
         const retArray = [];
-        props.groups.forEach((unit, index) => {
+        groups.forEach((unit) => {
             if(unit.track){
                 for(let i = 0; i < unit.count; i++){
                     retArray.push({
+                        key: i,
                         name: `${unit.name} (${i + 1})`,
                         health: unit.health,
-                        bonus: unit.bonus
+                        bonus: unit.bonus,
+                        initiative: 0
                     });
                 }
             }
         });
-        props.party.forEach((unit, index) => {
+        party.forEach((unit, i) => {
             if(unit.track && unit.name !== ''){
                 retArray.push({
+                    key: i,
                     name: `${unit.name}`,
                     health: unit.health,
-                    bonus: unit.bonus
+                    bonus: unit.bonus,
+                    initiative: 0
                 });
             }
         });
         return retArray;
-    })()
+    };
 
-    // const allUnits = allUnitsFunc(props.groups, props.party);
+    if(localHidden !== hidden){
+        sethidden(hidden);
+        setUnits(updateUnits);
+    }
+
+    const handleChange = index => (event) => {
+        const unit = allUnits[index]
+        unit[event.target.name] = event.target.value ? event.target.value: event.target.checked;
+        allUnits[index] = unit;
+    };
+
+    const sortUnits = () => {
+        setUnits(() => {
+            const tempArray = [...allUnits];
+            const temp = tempArray.shift();
+            tempArray.push(temp);
+            return tempArray;
+        })
+    }
     
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
@@ -40,40 +64,59 @@ export default function Tracker(props) {
       }));
 
     const headerGrid = (
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
             <Grid item xs={2}>
                 <Item>Name</Item>
             </Grid>
             <Grid item xs={1}>
                 <Item>Health</Item>
             </Grid>
+            <Grid item xs={1}>
+                <Item>Initiative</Item>
+            </Grid>
         </Grid>
     );
-    const groupBox = (group) => (
-        <div className='GroupBox' key={group.name}>
-            <Grid container spacing={2}>
+    const groupBox = (group, index) => {
+        // console.log('rerender');
+        return (
+        <div className='GroupBox' key={group.key}>
+            <Grid container spacing={3}>
                 <Grid item xs={2}>
                     <Item>{group.name}</Item>
                 </Grid>
                 <Grid item xs={1}>
                     <Item>{group.health}</Item>
                 </Grid>
+                <Grid item xs={1}>
+                    <Item>
+                        <InitBox key={'init' + group.key} initVal={group.initiative} onUpdateInit={handleChange(index)}/>
+                    </Item>
+                </Grid>
             </Grid>
         </div>
-    );
+        );
+}
     
     return (
         <div 
             className='Groups'
-            style={{display: props.hidden === false ? 'grid' : 'none'}}
+            style={{display: hidden === false ? 'grid' : 'none'}}
         >
             {headerGrid}
-            {allUnits.map((group) => {
+            {allUnits.map((group, index) => {
                 const displayedUnits = [];
-                displayedUnits.push(groupBox(group));
+                displayedUnits.push(groupBox(group, index));
                 return displayedUnits;
             })
             }
+            <Button 
+                className='AddGroupButton'
+                variant="outlined" 
+                size="small"
+                onClick={sortUnits}
+            >
+                <span className="material-icons">add</span>
+            </Button>
         </div>
     );
 }

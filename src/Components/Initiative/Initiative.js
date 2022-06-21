@@ -61,15 +61,15 @@ class Initiative extends React.Component {
             groups={this.state.groups}
             onGroupChange={this.handleGroupChange}
           />
-          <Tracker
-            hidden={tab!=='tracker'}
-            groups={this.state.groups}
-            party={this.state.party}
-          />
           <Party
             hidden={tab!=='party'}
             party={this.state.party}
             onPartyChange={this.handlePartyChange}
+          />
+          <Tracker
+            hidden={tab!=='tracker'}
+            groups={this.state.groups}
+            party={this.state.party}
           />
         </div>
       </div>
