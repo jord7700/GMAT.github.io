@@ -17,6 +17,7 @@ export default function Tracker({groups, party, hidden}) {
                         name: `${unit.name} (${i + 1})`,
                         health: unit.health,
                         bonus: unit.bonus,
+                        player: false,
                         initiative: 0
                     });
                 }
@@ -29,6 +30,7 @@ export default function Tracker({groups, party, hidden}) {
                     name: `${unit.name}`,
                     health: unit.health,
                     bonus: unit.bonus,
+                    player: true,
                     initiative: 0
                 });
             }
@@ -50,8 +52,19 @@ export default function Tracker({groups, party, hidden}) {
     const sortUnits = () => {
         setUnits(() => {
             const tempArray = [...allUnits];
-            const temp = tempArray.shift();
-            tempArray.push(temp);
+            tempArray.sort(function(a, b){return b.initiative - a.initiative === 0 ? b.bonus - a.bonus : b.initiative - a.initiative});
+            return tempArray;
+        })
+    }
+
+    const rollInits = () => {
+        setUnits(() => {
+            const tempArray = [...allUnits];
+            tempArray.forEach(unit => {
+                if(!unit.player) {
+                    unit.initiative = Math.floor(Math.random() * 21) + parseInt(unit.bonus);
+                }
+            });
             return tempArray;
         })
     }
@@ -64,7 +77,7 @@ export default function Tracker({groups, party, hidden}) {
       }));
 
     const headerGrid = (
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
             <Grid item xs={2}>
                 <Item>Name</Item>
             </Grid>
@@ -80,7 +93,7 @@ export default function Tracker({groups, party, hidden}) {
         // console.log('rerender');
         return (
         <div className='GroupBox' key={group.key}>
-            <Grid container spacing={3}>
+            <Grid container spacing={4}>
                 <Grid item xs={2}>
                     <Item>{group.name}</Item>
                 </Grid>
@@ -98,7 +111,7 @@ export default function Tracker({groups, party, hidden}) {
 }
     
     return (
-        <div 
+        <div
             className='Groups'
             style={{display: hidden === false ? 'grid' : 'none'}}
         >
@@ -109,14 +122,30 @@ export default function Tracker({groups, party, hidden}) {
                 return displayedUnits;
             })
             }
-            <Button 
-                className='AddGroupButton'
-                variant="outlined" 
-                size="small"
-                onClick={sortUnits}
-            >
-                <span className="material-icons">add</span>
-            </Button>
+            <Grid container spacing={4}>
+                <Grid item xs={4}>
+                    <Button 
+                        className='AddGroupButton'
+                        variant="outlined" 
+                        size="small"
+                        onClick={sortUnits}
+                    >
+                        <span className="material-icons">add</span>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid container spacing={4}>
+                <Grid item xs={4}>
+                    <Button 
+                        className='AddGroupButton'
+                        variant="outlined" 
+                        size="small"
+                        onClick={rollInits}
+                    >
+                        <span className="material-icons">shuffle</span>
+                    </Button>
+                </Grid>
+            </Grid>
         </div>
     );
 }
