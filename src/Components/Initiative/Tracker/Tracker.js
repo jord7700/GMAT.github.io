@@ -62,9 +62,18 @@ export default function Tracker({groups, party, hidden}) {
             const tempArray = [...allUnits];
             tempArray.forEach(unit => {
                 if(!unit.player) {
-                    unit.initiative = Math.floor(Math.random() * 21) + parseInt(unit.bonus);
+                    unit.initiative = Math.floor(Math.random() * 21) + parseInt(unit.bonus, 10);
                 }
             });
+            return tempArray;
+        })
+    }
+
+    const changeTurns = () => {
+        setUnits(() => {
+            const tempArray = [...allUnits];
+            const temp = tempArray.shift();
+            tempArray.push(temp);
             return tempArray;
         })
     }
@@ -130,7 +139,19 @@ export default function Tracker({groups, party, hidden}) {
                         size="small"
                         onClick={sortUnits}
                     >
-                        <span className="material-icons">add</span>
+                        <span className="material-icons">sort</span>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid container spacing={4}>
+                <Grid item xs={4}>
+                    <Button 
+                        className='AddGroupButton'
+                        variant="outlined" 
+                        size="small"
+                        onClick={changeTurns}
+                    >
+                        <span className="material-icons">repeat</span>
                     </Button>
                 </Grid>
             </Grid>

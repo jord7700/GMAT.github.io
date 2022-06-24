@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, TextField} from '@material-ui/core';
+import {Box, Button, Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
 
 export default function Groups(props) {
     const groups = props.groups;
@@ -36,15 +36,19 @@ export default function Groups(props) {
             className='Groups'
             style={{display: props.hidden === false ? 'grid' : 'none'}}
         >
-            {groups.map((group, i) => {return groupBox(group, i)})}
-            <Button 
-                className='AddGroupButton'
-                variant="outlined" 
-                size="small"
-                onClick={addGroup}
-            >
-                <span className="material-icons">add</span>
-            </Button>
+            <Grid container spacing={5}>
+                <Grid item xs={5}>
+                    {groups.map((group, i) => {return groupBox(group, i)})}
+                    <Button 
+                        className='AddGroupButton'
+                        variant="outlined" 
+                        size="small"
+                        onClick={addGroup}
+                    >
+                        <span className="material-icons">add</span>
+                    </Button>
+                </Grid>
+            </Grid>
         </div>
     );
 }
