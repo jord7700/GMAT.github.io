@@ -39,6 +39,10 @@ export default function Groups(props) {
             <Grid container spacing={5}>
                 <Grid item xs={5}>
                     {groups.map((group, i) => {return groupBox(group, i)})}
+                </Grid>
+            </Grid>
+            <Grid container spacing={4}>
+                <Grid item xs={4}>
                     <Button 
                         className='AddGroupButton'
                         variant="outlined" 

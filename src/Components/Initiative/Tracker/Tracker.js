@@ -95,6 +95,26 @@ export default function Tracker({groups, party, hidden}) {
             </Grid>
             <Grid item xs={1}>
                 <Item>Initiative</Item>
+            </Grid>  
+            <Grid item xs={1}>  
+                <Button
+                    className='AddGroupButton'
+                    variant="outlined" 
+                    size="small"
+                    onClick={changeTurns}
+                >
+                    <span className="material-icons">repeat</span>
+                </Button>
+            </Grid>
+            <Grid item xs={1}>
+                <Button 
+                        className='AddGroupButton'
+                        variant="outlined" 
+                        size="small"
+                        onClick={sortUnits}
+                    >
+                        <span className="material-icons">sort</span>
+                </Button>
             </Grid>
         </Grid>
     );
@@ -131,30 +151,6 @@ export default function Tracker({groups, party, hidden}) {
                 return displayedUnits;
             })
             }
-            <Grid container spacing={4}>
-                <Grid item xs={4}>
-                    <Button 
-                        className='AddGroupButton'
-                        variant="outlined" 
-                        size="small"
-                        onClick={sortUnits}
-                    >
-                        <span className="material-icons">sort</span>
-                    </Button>
-                </Grid>
-            </Grid>
-            <Grid container spacing={4}>
-                <Grid item xs={4}>
-                    <Button 
-                        className='AddGroupButton'
-                        variant="outlined" 
-                        size="small"
-                        onClick={changeTurns}
-                    >
-                        <span className="material-icons">repeat</span>
-                    </Button>
-                </Grid>
-            </Grid>
             <Grid container spacing={4}>
                 <Grid item xs={4}>
                     <Button 

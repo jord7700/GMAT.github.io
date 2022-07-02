@@ -36,6 +36,10 @@ export default function Party(props) {
             <Grid container spacing={5}>
                 <Grid item xs={5}>
                     {party.map((character, i) => {return characterBox(character, i)})}
+                </Grid>
+            </Grid>
+            <Grid container spacing={4}>
+                <Grid item xs={4}>
                     <Button 
                         className='AddGroupButton'
                         variant="outlined" 
