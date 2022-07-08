@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Grid, Paper, styled } from '@material-ui/core';
+import { Button, Grid, Paper, styled, Tooltip } from '@material-ui/core';
 import InitBox from './InitBox/InitBox';
 
 export default function Tracker({groups, party, hidden}) {
@@ -44,9 +44,11 @@ export default function Tracker({groups, party, hidden}) {
     }
 
     const handleChange = index => (event) => {
-        const unit = allUnits[index]
+        const tempArray = [...allUnits];
+        const unit = tempArray[index]
         unit[event.target.name] = event.target.value ? event.target.value: event.target.checked;
-        allUnits[index] = unit;
+        tempArray[index] = unit;
+        setUnits(tempArray);
     };
 
     const sortUnits = () => {
@@ -95,31 +97,35 @@ export default function Tracker({groups, party, hidden}) {
             </Grid>
             <Grid item xs={1}>
                 <Item>Initiative</Item>
-            </Grid>  
-            <Grid item xs={1}>  
-                <Button
-                    className='AddGroupButton'
-                    variant="outlined" 
-                    size="small"
-                    onClick={changeTurns}
-                >
-                    <span className="material-icons">repeat</span>
-                </Button>
             </Grid>
             <Grid item xs={1}>
-                <Button 
+                <Tooltip title='Next Turn'>
+                    <Button
                         className='AddGroupButton'
-                        variant="outlined" 
+                        variant="outlined"
                         size="small"
-                        onClick={sortUnits}
+                        onClick={changeTurns}
                     >
-                        <span className="material-icons">sort</span>
-                </Button>
+                        <span className="material-icons">repeat</span>
+                    </Button>
+                </Tooltip>
+            </Grid>
+            <Grid item xs={1}>
+                <Tooltip title='Sort'>
+                    <Button
+                            className='AddGroupButton'
+                            variant="outlined"
+                            size="small"
+                            onClick={sortUnits}
+                        >
+                            <span className="material-icons">sort</span>
+                    </Button>
+                </Tooltip>
             </Grid>
         </Grid>
     );
+
     const groupBox = (group, index) => {
-        // console.log('rerender');
         return (
         <div className='GroupBox' key={group.key}>
             <Grid container spacing={4}>
@@ -127,18 +133,20 @@ export default function Tracker({groups, party, hidden}) {
                     <Item>{group.name}</Item>
                 </Grid>
                 <Grid item xs={1}>
-                    <Item>{group.health}</Item>
+                    <Item>
+                        <InitBox key={'init' + group.key} name="health" initVal={group.health} onUpdate={handleChange(index)}/>
+                    </Item>
                 </Grid>
                 <Grid item xs={1}>
                     <Item>
-                        <InitBox key={'init' + group.key} initVal={group.initiative} onUpdateInit={handleChange(index)}/>
+                        <InitBox key={'init' + group.key} name="initiative" initVal={group.initiative} onUpdate={handleChange(index)}/>
                     </Item>
                 </Grid>
             </Grid>
         </div>
-        );
+    );
 }
-    
+
     return (
         <div
             className='Groups'
@@ -153,14 +161,16 @@ export default function Tracker({groups, party, hidden}) {
             }
             <Grid container spacing={4}>
                 <Grid item xs={4}>
-                    <Button 
-                        className='AddGroupButton'
-                        variant="outlined" 
-                        size="small"
-                        onClick={rollInits}
-                    >
-                        <span className="material-icons">shuffle</span>
-                    </Button>
+                <Tooltip title='Roll Initiatives'>
+                        <Button 
+                            className='AddGroupButton'
+                            variant="outlined" 
+                            size="small"
+                            onClick={rollInits}
+                        >
+                            <span className="material-icons">shuffle</span>
+                        </Button>
+                    </Tooltip>
                 </Grid>
             </Grid>
         </div>
