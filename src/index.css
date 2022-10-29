@@ -85,6 +85,10 @@ body {
   width: 100%;
 }
 
+.DeleteGroupButton {
+  width: auto;
+}
+
 .NarrowTextField {
   width: 94px;
 }

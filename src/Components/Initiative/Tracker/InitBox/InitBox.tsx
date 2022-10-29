@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { TextField } from '@material-ui/core';
 
-export default function InitBox({ initVal, onUpdate, name }) {  
+export default function InitBox({ initVal, onUpdate, name }: any) {  
   // derive initial state from props
   const [initiative, setInitiative] = React.useState(initVal);
 
-  function handleChange(event) {
+  function handleChange(event: any) {
     setInitiative(event.target.value);
     onUpdate(event);
   }

@@ -1,7 +1,12 @@
 import * as React from 'react';
 import {Tabs, Tab, Box} from '@material-ui/core';
 
-export default function TopBar(props) {
+type topBarProps = {
+  value: string,
+  onChange: (event: React.ChangeEvent<{}>, value: any) => void,
+}
+
+export default function TopBar(props: topBarProps) {
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs

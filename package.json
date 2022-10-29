@@ -5,9 +5,17 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "@types/jest": "^29.2.0",
+    "@types/node": "^18.11.3",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "global": "^4.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "^5.0.1",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
@@ -19,5 +27,17 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

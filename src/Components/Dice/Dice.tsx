@@ -1,8 +1,24 @@
 import * as React from 'react';
 import Die from '../Die/Die';
 
+type diceState = {
+  diceCollection: dCol[],
+  modifierTotal: number,
+  history: any[],
+}
+
+type dCol = {
+  val: number,
+  numDice: number,
+}
+
+type diceProps = {
+  hidden: boolean,
+}
+
 class Dice extends React.Component {
-  constructor(props) {
+  state: diceState;
+  constructor(props: diceProps) {
     super(props);
     this.state = {
       diceCollection: [
@@ -39,24 +55,24 @@ class Dice extends React.Component {
     this.clearHistory = this.clearHistory.bind(this);
   }
 
-  handleChange(event) {
+  handleChange(event: any) {
     this.setState({
       modifierTotal: parseInt(event.target.value, 10),
     });
   }
 
-  handleClick(value){
+  handleClick(value: any){
     const index = this.state.diceCollection.findIndex((e) => e.val === value);
     const diceCount = this.state.diceCollection[index].numDice;
-    const randVal =  (retVal) =>{
-      retVal = 0;
+    const randVal =  (): number =>{
+      let retVal = 0;
       for(let i = 0; i < diceCount; i++){
         const newVal = Math.floor(Math.random() * (parseInt(value, 10))) + 1;
         retVal += newVal;
       }
       return retVal;
     }
-    const retVal = randVal() + this.state.modifierTotal;
+    const retVal: number = randVal() + this.state.modifierTotal;
     const rollStr = () =>{
       if(this.state.modifierTotal === 0){
         return diceCount + 'D' + value;
@@ -74,10 +90,10 @@ class Dice extends React.Component {
     });
   }
 
-  handleDieCount(value, index){
+  handleDieCount(value: number, index: number){
     let items = [...this.state.diceCollection];
     let item = {...items[index]};
-    item.numDice = parseInt(value, 10) + item.numDice === 0 ? 1 : parseInt(value, 10) + item.numDice;
+    item.numDice = value + item.numDice === 0 ? 1 : value + item.numDice;
     items[index] = item;
     this.setState({diceCollection: items});
   }
@@ -107,7 +123,7 @@ class Dice extends React.Component {
     return (
       <div
         className="Dice"
-        style={{display: this.props.hidden === false ? 'grid' : 'none'}}
+        style={{display: (this.props as diceProps).hidden === false ? 'grid' : 'none'}}
       >
         <div className='DieSelector'>
           <button

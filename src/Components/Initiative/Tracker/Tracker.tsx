@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Button, Grid, Paper, styled, Tooltip } from '@material-ui/core';
 import InitBox from './InitBox/InitBox';
 
-export default function Tracker({groups, party, hidden}) {
+export default function Tracker({groups, party, hidden}: any) {
     // create local copy of groups and party
     const [localHidden, sethidden] = React.useState(hidden);
     const [allUnits, setUnits] = React.useState([]);
 
     const updateUnits = () => {
-        const retArray = [];
-        groups.forEach((unit) => {
+        const retArray: any[] = [];
+        groups.forEach((unit: any) => {
             if(unit.track){
                 for(let i = 0; i < unit.count; i++){
                     retArray.push({
@@ -23,7 +23,7 @@ export default function Tracker({groups, party, hidden}) {
                 }
             }
         });
-        party.forEach((unit, i) => {
+        party.forEach((unit: any, i: number) => {
             if(unit.track && unit.name !== ''){
                 retArray.push({
                     key: i,
@@ -40,12 +40,12 @@ export default function Tracker({groups, party, hidden}) {
 
     if(localHidden !== hidden){
         sethidden(hidden);
-        setUnits(updateUnits);
+        setUnits(updateUnits as any);
     }
 
-    const handleChange = index => (event) => {
-        const tempArray = [...allUnits];
-        const unit = tempArray[index]
+    const handleChange = (index: number) => (event: any) => {
+        const tempArray: any = [...allUnits];
+        const unit: any = tempArray[index]
         unit[event.target.name] = event.target.value ? event.target.value: event.target.checked;
         tempArray[index] = unit;
         setUnits(tempArray);
@@ -54,7 +54,7 @@ export default function Tracker({groups, party, hidden}) {
     const sortUnits = () => {
         setUnits(() => {
             const tempArray = [...allUnits];
-            tempArray.sort(function(a, b){return b.initiative - a.initiative === 0 ? b.bonus - a.bonus : b.initiative - a.initiative});
+            tempArray.sort(function(a: any, b: any){return b.initiative - a.initiative === 0 ? b.bonus - a.bonus : b.initiative - a.initiative});
             return tempArray;
         })
     }
@@ -62,7 +62,7 @@ export default function Tracker({groups, party, hidden}) {
     const rollInits = () => {
         setUnits(() => {
             const tempArray = [...allUnits];
-            tempArray.forEach(unit => {
+            tempArray.forEach((unit: any) => {
                 if(!unit.player) {
                     unit.initiative = Math.floor(Math.random() * 21) + parseInt(unit.bonus, 10);
                 }
@@ -73,8 +73,8 @@ export default function Tracker({groups, party, hidden}) {
 
     const changeTurns = () => {
         setUnits(() => {
-            const tempArray = [...allUnits];
-            const temp = tempArray.shift();
+            const tempArray: any = [...allUnits];
+            const temp: any = tempArray.shift();
             tempArray.push(temp);
             return tempArray;
         })
@@ -125,7 +125,7 @@ export default function Tracker({groups, party, hidden}) {
         </Grid>
     );
 
-    const groupBox = (group, index) => {
+    const groupBox = (group: any, index: number) => {
         return (
         <div className='GroupBox' key={group.key}>
             <Grid container spacing={4}>

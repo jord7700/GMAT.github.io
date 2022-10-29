@@ -56,7 +56,7 @@ class Initiative extends React.Component {
             onChange={setValue}/>
         </div>
         <div className="Initiative">
-          <Groups 
+          <Groups
             hidden={tab!=='groups'}
             groups={this.state.groups}
             onGroupChange={this.handleGroupChange}

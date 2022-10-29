@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
-
-export default function Die(props) {
-  const changeDieCount = (value) => {
+export default function Die(props: any) {
+  const changeDieCount = (value: number) => {
     props.onChange(value, props.index);
   };
   const handleClick = () => {
