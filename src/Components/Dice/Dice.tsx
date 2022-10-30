@@ -12,11 +12,12 @@ type dCol = {
   numDice: number,
 }
 
-type diceProps = {
+export interface diceProps {
   hidden: boolean,
 }
 
-class Dice extends React.Component {
+
+class Dice extends React.Component<diceProps> {
   state: diceState;
   constructor(props: diceProps) {
     super(props);

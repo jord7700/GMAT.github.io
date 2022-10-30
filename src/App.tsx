@@ -4,17 +4,18 @@ import Dice from './Components/Dice/Dice';
 import Initiative from './Components/Initiative/Initiative';
 import './App.css';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tab: 'two',
-    }
+type AppState = {
+  tab: string,
+}
+
+class App extends React.Component<AppState> {
+  state: AppState = {
+    tab: 'two',
   }
 
   render() {
     const tab = this.state.tab;
-    const setValue = (event, newValue) =>{
+    const setValue = (_event: any, newValue: any) =>{
       this.setState({
         tab: newValue,
       })
@@ -22,13 +23,14 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="App-header">
+
           <TopBar
             value={tab}
             onChange={setValue}
           />
         </div>
         <Dice hidden={tab!=='one'}/>
-        <Initiative hidden={tab!=='two'}>initiative</Initiative>
+        <Initiative hidden={tab!=='two'}/>
         <p hidden={tab!=='three'}>rules</p>
       </div>
     );

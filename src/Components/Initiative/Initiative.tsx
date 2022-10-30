@@ -2,10 +2,11 @@ import * as React from 'react';
 import InitiativeBar from './InitiativeBar/InitiativeBar';
 import Groups from './Groups/Groups';
 import Tracker from './Tracker/Tracker';
+import { diceProps } from '../Dice/Dice';
 import Party from './Party/Party';
 
-class Initiative extends React.Component {
-  constructor(props) {
+class Initiative extends React.Component<diceProps> {
+  constructor(props: diceProps) {
     super(props);
     this.state = {
       tab: 'groups',
@@ -27,21 +28,21 @@ class Initiative extends React.Component {
     this.handlePartyChange = this.handlePartyChange.bind(this);
   }
 
-  handleGroupChange(value) {
+  handleGroupChange(value: any) {
     this.setState({
       groups:value
     })
   }
 
-  handlePartyChange(value) {
+  handlePartyChange(value: any) {
     this.setState({
       party:value
     })
   }
 
   render() {
-    const tab = this.state.tab;
-    const setValue = (event, newValue) =>{
+    const tab = (this.state as any).tab;
+    const setValue = (event: any, newValue: any) =>{
       this.setState({
         tab: newValue,
       })
@@ -58,18 +59,18 @@ class Initiative extends React.Component {
         <div className="Initiative">
           <Groups
             hidden={tab!=='groups'}
-            groups={this.state.groups}
+            groups={(this.state as any).groups}
             onGroupChange={this.handleGroupChange}
           />
           <Party
             hidden={tab!=='party'}
-            party={this.state.party}
+            party={(this.state as any).party}
             onPartyChange={this.handlePartyChange}
           />
           <Tracker
             hidden={tab!=='tracker'}
-            groups={this.state.groups}
-            party={this.state.party}
+            groups={(this.state as any).groups}
+            party={(this.state as any).party}
           />
         </div>
       </div>
