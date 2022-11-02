@@ -1,15 +1,20 @@
 import * as React from 'react';
 import Die from '../Die/Die';
 
-type diceState = {
+interface DiceState {
   diceCollection: dCol[],
   modifierTotal: number,
-  history: any[],
+  history: History[],
 }
 
-type dCol = {
+interface dCol {
   val: number,
   numDice: number,
+}
+
+interface History {
+  results: number,
+  rollStr: string,
 }
 
 export interface diceProps {
@@ -18,7 +23,7 @@ export interface diceProps {
 
 
 class Dice extends React.Component<diceProps> {
-  state: diceState;
+  state: DiceState;
   constructor(props: diceProps) {
     super(props);
     this.state = {
@@ -74,7 +79,7 @@ class Dice extends React.Component<diceProps> {
       return retVal;
     }
     const retVal: number = randVal() + this.state.modifierTotal;
-    const rollStr = () =>{
+    const rollStr = (): string => {
       if(this.state.modifierTotal === 0){
         return diceCount + 'D' + value;
       } else if(this.state.modifierTotal > 0){
@@ -82,6 +87,7 @@ class Dice extends React.Component<diceProps> {
       } else if(this.state.modifierTotal < 0){
         return diceCount + 'D' + value + ' - ' + Math.abs(this.state.modifierTotal);
       }
+      return 'BAD ROLL';
     };
     this.setState({
       history: this.state.history.concat([{
@@ -124,7 +130,7 @@ class Dice extends React.Component<diceProps> {
     return (
       <div
         className="Dice"
-        style={{display: (this.props as diceProps).hidden === false ? 'grid' : 'none'}}
+        style={{display: this.props.hidden === false ? 'grid' : 'none'}}
       >
         <div className='DieSelector'>
           <button
@@ -145,6 +151,7 @@ class Dice extends React.Component<diceProps> {
             )
           }
           <div className='Modifiers'>
+            <span>Modifier: </span>
             <input 
               id="modifier"
               type="number" 

@@ -5,7 +5,29 @@ import Tracker from './Tracker/Tracker';
 import { diceProps } from '../Dice/Dice';
 import Party from './Party/Party';
 
+interface InitiativeState {
+  tab: string,
+  groups: Groups[],
+  party: Party[],
+}
+
+interface Groups {
+  name: string,
+  count: number,
+  health: number,
+  bonus: number,
+  track: boolean,
+}
+
+interface Party {
+  name: string,
+  health: number,
+  bonus: number,
+  track: boolean,
+}
+
 class Initiative extends React.Component<diceProps> {
+  state: InitiativeState;
   constructor(props: diceProps) {
     super(props);
     this.state = {
