@@ -10,6 +10,7 @@ interface DiceState {
 interface dCol {
   val: number,
   numDice: number,
+  customDie?: boolean
 }
 
 interface History {
@@ -41,6 +42,10 @@ class Dice extends React.Component<diceProps> {
           numDice: 1,
         },
         {
+          val: 10, 
+          numDice: 1,
+        },
+        {
           val: 12, 
           numDice: 1,
         },
@@ -48,12 +53,16 @@ class Dice extends React.Component<diceProps> {
           val: 20, 
           numDice: 1,
         },
+        {
+          val: 0,
+          numDice: 1,
+          customDie: true
+        },
       ],
       modifierTotal: 0,
       history: []
-      // results: 0,
-      // rollStr: 'firstRoll'
     };
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleDieCount = this.handleDieCount.bind(this);
@@ -67,13 +76,13 @@ class Dice extends React.Component<diceProps> {
     });
   }
 
-  handleClick(value: any){
+  handleClick(value: number){
     const index = this.state.diceCollection.findIndex((e) => e.val === value);
     const diceCount = this.state.diceCollection[index].numDice;
     const randVal =  (): number =>{
       let retVal = 0;
       for(let i = 0; i < diceCount; i++){
-        const newVal = Math.floor(Math.random() * (parseInt(value, 10))) + 1;
+        const newVal = Math.floor(Math.random() * (value + 1));
         retVal += newVal;
       }
       return retVal;
