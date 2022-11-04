@@ -22,6 +22,15 @@ export interface diceProps {
   hidden: boolean,
 }
 
+function randVal(value: number, diceCount: number) {
+  let retVal = 0;
+  for(let i = 0; i < diceCount; i++){
+    const newVal = value != 0 ? Math.floor(Math.random() * value) + 1 : 0;
+    retVal += newVal;
+  }
+  return retVal;
+}
+
 
 class Dice extends React.Component<diceProps> {
   state: DiceState;
@@ -68,6 +77,7 @@ class Dice extends React.Component<diceProps> {
     this.handleDieCount = this.handleDieCount.bind(this);
     this.resetDice = this.resetDice.bind(this);
     this.clearHistory = this.clearHistory.bind(this);
+    this.customDieChange = this.customDieChange.bind(this);
   }
 
   handleChange(event: any) {
@@ -79,15 +89,7 @@ class Dice extends React.Component<diceProps> {
   handleClick(value: number){
     const index = this.state.diceCollection.findIndex((e) => e.val === value);
     const diceCount = this.state.diceCollection[index].numDice;
-    const randVal =  (): number =>{
-      let retVal = 0;
-      for(let i = 0; i < diceCount; i++){
-        const newVal = value != 0 ? Math.floor(Math.random() * value) + 1 : 0;
-        retVal += newVal;
-      }
-      return retVal;
-    }
-    const retVal: number = randVal() + this.state.modifierTotal;
+    const retVal: number = randVal(value, diceCount) + this.state.modifierTotal;
     const rollStr = (): string => {
       if(this.state.modifierTotal === 0){
         return diceCount + 'D' + value;
@@ -128,6 +130,13 @@ class Dice extends React.Component<diceProps> {
     })
   }
 
+  customDieChange(value: number) {
+    const betterNum = Number(value);
+    const allDice = [...this.state.diceCollection];
+    (allDice.at(-1) as dCol).val = betterNum;
+    this.setState({diceCollection: allDice});
+  }
+
   render() {
     const history = this.state.history;
     const current = history[history.length -1];
@@ -153,8 +162,10 @@ class Dice extends React.Component<diceProps> {
                 key={i}
                 onChange={this.handleDieCount}
                 onClick={this.handleClick}
+                onCustomDieChange={this.customDieChange}
                 index={i}
                 diceCount={e.numDice}
+                customDie={e.customDie}
                 value={e.val}
               />
             )

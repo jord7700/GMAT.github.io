@@ -30,8 +30,6 @@ After installing the node dependencies run with
 
  # TODO:
  ## Dice
-  - D10: die 10
-  - DX: custom value die
   - Repeat Roll: click on roll in history to re-roll die
  ## Initiative Tracker
   - Save party to cookie

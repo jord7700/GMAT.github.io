@@ -76,7 +76,6 @@ body {
   background-color: beige;
 }
 
-/* Initiative */
 .Initiative {
   padding: 12px;
 }
@@ -103,4 +102,9 @@ body {
 
 #TrackGroup {
   margin-top: 6px;
+}
+
+#CustomDie input {
+  height: 5px;
+  width: 36px;
 }

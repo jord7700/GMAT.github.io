@@ -10,7 +10,7 @@ type AppState = {
 
 class App extends React.Component<AppState> {
   state: AppState = {
-    tab: 'two',
+    tab: 'one',
   }
 
   render() {

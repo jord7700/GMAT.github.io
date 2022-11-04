@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
 export default function Die(props: any) {
   const changeDieCount = (value: number) => {
@@ -8,6 +8,15 @@ export default function Die(props: any) {
   const handleClick = () => {
     props.onClick(props.value)
   };
+  const onChange = (event: any) => {
+    let value;
+    if(event.target.value == ''){
+      value = 0;
+    } else {
+      value = event.target.value;
+    }
+    props.onCustomDieChange(value);
+  }
   return (
     <div className='Die'>
       <Button 
@@ -27,8 +36,18 @@ export default function Die(props: any) {
       </Button>
       <button
       className='DieButton'
-      onClick={() => handleClick()}>
-        {props.diceCount}D{props.value}
+      onClick={() => handleClick()}
+      >
+        <span id='CustomDie'>
+          {props.diceCount}D
+          {props.customDie ? 
+            <TextField 
+              value={props.value}
+              onChange={onChange}
+            />
+            : props.value 
+          }
+        </span>
       </button>
     </div>
   );
