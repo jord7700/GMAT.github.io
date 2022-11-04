@@ -82,7 +82,7 @@ class Dice extends React.Component<diceProps> {
     const randVal =  (): number =>{
       let retVal = 0;
       for(let i = 0; i < diceCount; i++){
-        const newVal = Math.floor(Math.random() * (value + 1));
+        const newVal = value != 0 ? Math.floor(Math.random() * value) + 1 : 0;
         retVal += newVal;
       }
       return retVal;
