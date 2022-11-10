@@ -8,6 +8,7 @@ After installing the node dependencies run with
   - Roll any number of the standard D20 dice
   - Apply modifier to dice roll
   - View history of dice rolls
+  - Repeat Roll: click on roll in history to re-roll
  ## Initiative Tracker
  ### Groups
   - Create monster groups and
@@ -29,8 +30,8 @@ After installing the node dependencies run with
   - Change turns (move top creature to bottom of initiative)
 
  # TODO:
- ## Dice
-  - Repeat Roll: click on roll in history to re-roll die
+ ## General
+  - Replace react classes with functions
  ## Initiative Tracker
   - Save party to cookie
   - Load party on load

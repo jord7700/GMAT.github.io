@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Die from '../Die/Die';
+import { Button } from '@material-ui/core';
 
 interface DiceState {
   diceCollection: dCol[],
@@ -86,17 +87,18 @@ class Dice extends React.Component<diceProps> {
     });
   }
 
-  handleClick(value: number){
+  handleClick(value: number, customMod: number | undefined = undefined, customCount: number | undefined = undefined) {
     const index = this.state.diceCollection.findIndex((e) => e.val === value);
-    const diceCount = this.state.diceCollection[index].numDice;
-    const retVal: number = randVal(value, diceCount) + this.state.modifierTotal;
+    const diceCount = customCount ? customCount : this.state.diceCollection[index].numDice;
+    const mod = customMod ? customMod : this.state.modifierTotal;
+    const retVal: number = randVal(value, diceCount) + mod;
     const rollStr = (): string => {
-      if(this.state.modifierTotal === 0){
+      if(mod === 0){
         return diceCount + 'D' + value;
-      } else if(this.state.modifierTotal > 0){
-        return diceCount + 'D' + value + ' + ' + this.state.modifierTotal;
-      } else if(this.state.modifierTotal < 0){
-        return diceCount + 'D' + value + ' - ' + Math.abs(this.state.modifierTotal);
+      } else if(mod > 0){
+        return diceCount + 'D' + value + ' + ' + mod;
+      } else if(mod < 0){
+        return diceCount + 'D' + value + ' - ' + Math.abs(mod);
       }
       return 'BAD ROLL';
     };
@@ -108,7 +110,7 @@ class Dice extends React.Component<diceProps> {
     });
   }
 
-  handleDieCount(value: number, index: number){
+  handleDieCount(value: number, index: number) {
     let items = [...this.state.diceCollection];
     let item = {...items[index]};
     item.numDice = value + item.numDice === 0 ? 1 : value + item.numDice;
@@ -116,7 +118,7 @@ class Dice extends React.Component<diceProps> {
     this.setState({diceCollection: items});
   }
 
-  resetDice(){
+  resetDice() {
     const items = [...this.state.diceCollection];
     items.forEach(element => {
       element.numDice = 1
@@ -124,7 +126,7 @@ class Dice extends React.Component<diceProps> {
     this.setState({diceCollection: items});
   }
 
-  clearHistory(){
+  clearHistory() {
     this.setState({
       history: []
     })
@@ -137,12 +139,32 @@ class Dice extends React.Component<diceProps> {
     this.setState({diceCollection: allDice});
   }
 
+  historyRoll(roll: History) {
+    let rollStr = roll.rollStr;
+    let strArr = rollStr.split('D');
+    let diceCount = strArr[0];
+    strArr = strArr[1].split('+');
+    let value = strArr[0];
+    let mod = strArr[1] ? parseInt(strArr[1]) : 0;
+    this.handleClick(
+      parseInt(value), 
+      mod, 
+      parseInt(diceCount));
+  }
+
   render() {
     const history = this.state.history;
     const current = history[history.length -1];
     const rollList = history.map((roll, index) => {
       return(
-        <p key={index}>{roll.rollStr} : {roll.results}</p>
+        <Button 
+          key={index}
+          onClick={() => {
+            this.historyRoll(roll);
+          }}
+        >
+          <p>{roll.rollStr} : {roll.results}</p>
+        </Button>
       );
     });
     return (
@@ -172,9 +194,9 @@ class Dice extends React.Component<diceProps> {
           }
           <div className='Modifiers'>
             <span>Modifier: </span>
-            <input 
+            <input
               id="modifier"
-              type="number" 
+              type="number"
               onChange={this.handleChange}
               value={this.state.modifierTotal}
               />
@@ -197,5 +219,5 @@ class Dice extends React.Component<diceProps> {
     );
   }
 }
-  
-  export default Dice;
+
+export default Dice;
