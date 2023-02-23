@@ -3,7 +3,7 @@ import {Tabs, Tab, Box} from '@material-ui/core';
 
 type topBarProps = {
   value: string,
-  onChange: (event: React.ChangeEvent<{}>, value: any) => void,
+  onChange: (event: any, value: any) => void,
 }
 
 export default function TopBar(props: topBarProps) {

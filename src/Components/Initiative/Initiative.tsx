@@ -4,26 +4,11 @@ import Groups from './Groups/Groups';
 import Tracker from './Tracker/Tracker';
 import { diceProps } from '../Dice/Dice';
 import Party from './Party/Party';
+import { Unit } from 'src/Utils/types';
 
 interface InitiativeState {
   tab: string,
-  groups: Groups[],
-  party: Party[],
-}
-
-interface Groups {
-  name: string,
-  count: number,
-  health: number,
-  bonus: number,
-  track: boolean,
-}
-
-interface Party {
-  name: string,
-  health: number,
-  bonus: number,
-  track: boolean,
+  units: Unit[],
 }
 
 class Initiative extends React.Component<diceProps> {
@@ -32,39 +17,47 @@ class Initiative extends React.Component<diceProps> {
     super(props);
     this.state = {
       tab: 'groups',
-      groups:[{
+      units:[{
+        id: 0,
         name: '',
         count: 0,
         health: 0,
         bonus: 0,
-        track: true
-      }],
-      party:[{
-        name: '',
+        track: true,
+        initiative: 0,
+        player: false,
+      },
+      {
+        id: 1,
+        name: 'Jogn Man',
+        count: 1,
         health: 0,
         bonus: 0,
-        track: true
-      }]
+        track: true,
+        initiative: 0,
+        player: true,
+      }],
     };
     this.handleGroupChange = this.handleGroupChange.bind(this);
     this.handlePartyChange = this.handlePartyChange.bind(this);
   }
 
   handleGroupChange(value: any) {
+    // console.log(value);
     this.setState({
-      groups:value
+      units:value
     })
   }
 
   handlePartyChange(value: any) {
     this.setState({
-      party:value
+      units:value
     })
   }
 
   render() {
     const tab = (this.state as any).tab;
-    const setValue = (event: any, newValue: any) =>{
+    const setValue = (_: any, newValue: any) =>{
       this.setState({
         tab: newValue,
       })
@@ -81,23 +74,22 @@ class Initiative extends React.Component<diceProps> {
         <div className="Initiative">
           <Groups
             hidden={tab!=='groups'}
-            groups={(this.state as any).groups}
+            units={this.state.units}
             onGroupChange={this.handleGroupChange}
           />
           <Party
             hidden={tab!=='party'}
-            party={(this.state as any).party}
+            units={this.state.units}
             onPartyChange={this.handlePartyChange}
           />
           <Tracker
             hidden={tab!=='tracker'}
-            groups={(this.state as any).groups}
-            party={(this.state as any).party}
+            units={this.state.units}
           />
         </div>
       </div>
     );
   }
 }
-  
-  export default Initiative;
+
+export default Initiative;

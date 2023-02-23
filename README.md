@@ -33,6 +33,7 @@ After installing the node dependencies run with
  ## General
   - Replace react classes with functions
  ## Initiative Tracker
+  - Enter initiative values without multiple clicks
   - Save party to cookie
   - Load party on load
   - Save groups to cookie

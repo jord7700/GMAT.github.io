@@ -1,23 +1,29 @@
 import * as React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
+import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core';
+import { ReactInputEvent, Unit } from 'src/Utils/types';
 
 export default function Party(props: any) {
-    const party = props.party;
-    const handleChange = (index: number) => (event: any) => {
-        console.log(event);
-        const character = party[index];
-        character[event.target.name] = event.target.value !== 'false' ? event.target.value: event.target.checked;
-        props.onPartyChange(party);
+    const party = props.units.filter((unit: Unit) => unit.player === true);
+    const handleChange = (index: number) => (event: ReactInputEvent) => {
+        const character = props.units.find((unit: Unit) => party[index].id === unit.id);
+        // update unit track value
+        if (event.target.name == 'track') {
+            character[event.target.name] = event.target.checked;
+            props.onPartyChange(props.units);
+            return;
+        }
+        character[event.target.name] = event.target.value !== 'false' ? event.target.value : event.target.checked;
+        props.onPartyChange(props.units);
     };
     const characterBox = (character: any, index: number) => (
         <Box key={index}>
             <TextField name="name" value={character.name} onChange={handleChange(index)} label="Character Name" variant="outlined" />
-            <TextField name="health" value={character.health} onChange={handleChange(index)} className="NarrowTextField" label="Health" variant="outlined" type="Number"/>
-            <TextField name="bonus" value={character.bonus} onChange={handleChange(index)} className="NarrowTextField" label="Bonus" variant="outlined" type="Number"/>
+            <TextField name="health" value={character.health} onChange={handleChange(index)} className="NarrowTextField" label="Health" variant="outlined" type="Number" />
+            <TextField name="bonus" value={character.bonus} onChange={handleChange(index)} className="NarrowTextField" label="Bonus" variant="outlined" type="Number" />
             <FormControlLabel id="TrackGroup" control={<Checkbox name="track" onChange={handleChange(index)} checked={character.track} />} label="Track" />
-            <Button 
+            <Button
                 className='DeleteGroupButton'
-                variant="outlined" 
+                variant="outlined"
                 size="small"
                 onClick={event => deleteCharacter(index)}
             >
@@ -41,22 +47,22 @@ export default function Party(props: any) {
         party.splice(index, 1);
         props.onPartyChange(party);
     }
-    
+
     return (
-        <div 
+        <div
             className='Groups'
-            style={{display: props.hidden === false ? 'grid' : 'none'}}
+            style={{ display: props.hidden === false ? 'grid' : 'none' }}
         >
             <Grid container spacing={5}>
                 <Grid item xs={10}>
-                    {party.map((character: any, i: number) => {return characterBox(character, i)})}
+                    {party.map((character: any, i: number) => { return characterBox(character, i) })}
                 </Grid>
             </Grid>
             <Grid container spacing={5}>
                 <Grid item xs={10}>
-                    <Button 
+                    <Button
                         className='AddGroupButton'
-                        variant="outlined" 
+                        variant="outlined"
                         size="small"
                         onClick={addCharacter}
                     >
