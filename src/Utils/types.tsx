@@ -3,7 +3,7 @@ export type CallbackFunctionAny = (...args: unknown[]) => void;
 export type ReactInputEvent = React.ChangeEvent<HTMLInputElement>;
 
 export type Unit = {
-    id: number,
+    id: string,
     name: string,
     count: number,
     health: number,

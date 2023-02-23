@@ -18,7 +18,7 @@ class Initiative extends React.Component<diceProps> {
     this.state = {
       tab: 'groups',
       units:[{
-        id: 0,
+        id: '0',
         name: '',
         count: 0,
         health: 0,
@@ -28,7 +28,7 @@ class Initiative extends React.Component<diceProps> {
         player: false,
       },
       {
-        id: 1,
+        id: '1',
         name: 'Jogn Man',
         count: 1,
         health: 0,

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Box, Button, Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
 import { Unit } from 'src/Utils/types';
+import {v4 as uuidv4} from 'uuid';
 
 export default function Groups(props: any) {
     const groups = props.units.filter((unit: Unit) => unit.player === false);
-    const handleChange = (id: number) => (event: any) => {
-        console.log('groupchange', props.units);
+    
+    const handleChange = (id: string) => (event: any) => {
         const group = props.units.find((unit: Unit) => unit !== undefined && unit.id === id);
         // update unit track value
         if(event.target.name == 'track'){
@@ -16,6 +17,7 @@ export default function Groups(props: any) {
         group[event.target.name] = event.target.value !== 'false' ? event.target.value: event.target.checked;
         props.onGroupChange(props.units);
     };
+    
     const groupBox = (group: any, index: number) => (
         <Box key={index}>
             <TextField name="name" value={group.name} onChange={handleChange(group.id)} label="Group Name" variant="outlined" />
@@ -37,7 +39,7 @@ export default function Groups(props: any) {
     const addGroup = () => {
         const units = [...props.units];
         units.push({
-            id: units.length + 1,
+            id: uuidv4(),
             name: '',
             count: 0,
             health: 0,
@@ -49,12 +51,12 @@ export default function Groups(props: any) {
         props.onGroupChange(units);
     }
 
-    const deleteCharacter = (id: number) => {
+    const deleteCharacter = (id: string) => {
         console.log(id);
         const units = [...props.units];
         const index = units.findIndex((unit: Unit) => unit !== undefined && unit.id === id);
         console.log(index);
-        units.splice(index-1, 1);
+        units.splice(index, 1);
         props.onGroupChange(units);
     }
     
