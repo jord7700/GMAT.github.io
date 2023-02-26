@@ -32,7 +32,7 @@ After installing the node dependencies run with
  # TODO:
  ## General
   - Replace react classes with functions
-  - Restore initiative tracker funcitonallity
+  - Restore initiative tracker funcitonallity 
  ## Initiative Tracker
   - Enter initiative values without multiple clicks
   - Save party to cookie
