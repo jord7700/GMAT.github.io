@@ -40,7 +40,6 @@ export default function Party(props: any) {
         units.push({
             id: uuidv4(),
             name: '',
-            count: 0,
             health: 0,
             bonus: 0,
             track: true,

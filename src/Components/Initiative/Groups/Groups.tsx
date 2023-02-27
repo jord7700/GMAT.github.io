@@ -1,37 +1,44 @@
 import * as React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Grid, TextField} from '@material-ui/core';
+import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import { Unit } from 'src/Utils/types';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Groups(props: any) {
     const groups = props.units.filter((unit: Unit) => unit.player === false);
-    
+
     const handleChange = (id: string) => (event: any) => {
         const group = props.units.find((unit: Unit) => unit !== undefined && unit.id === id);
         // update unit track value
-        if(event.target.name == 'track'){
+        if (event.target.name == 'track') {
             group[event.target.name] = event.target.checked;
             props.onGroupChange(props.units);
             return;
         }
-        group[event.target.name] = event.target.value !== 'false' ? event.target.value: event.target.checked;
+        group[event.target.name] = event.target.value !== 'false' ? event.target.value : event.target.checked;
         props.onGroupChange(props.units);
     };
-    
+
     const groupBox = (group: any, index: number) => (
         <Box key={index}>
             <TextField name="name" value={group.name} onChange={handleChange(group.id)} label="Group Name" variant="outlined" />
-            <TextField name="count" value={group.count} onChange={handleChange(group.id)} className="NarrowTextField" label="Count" variant="outlined" type="Number"/>
-            <TextField name="health" value={group.health} onChange={handleChange(group.id)} className="NarrowTextField" label="Health" variant="outlined" type="Number"/>
-            <TextField name="bonus" value={group.bonus} onChange={handleChange(group.id)} className="NarrowTextField" label="Bonus" variant="outlined" type="Number"/>
+            <TextField name="health" value={group.health} onChange={handleChange(group.id)} className="NarrowTextField" label="Health" variant="outlined" type="Number" />
+            <TextField name="bonus" value={group.bonus} onChange={handleChange(group.id)} className="NarrowTextField" label="Bonus" variant="outlined" type="Number" />
             <FormControlLabel id="TrackGroup" control={<Checkbox name="track" onChange={handleChange(group.id)} checked={group.track} />} label="Track" />
-            <Button 
+            <Button
                 className='DeleteGroupButton'
-                variant="outlined" 
+                variant="outlined"
                 size="small"
                 onClick={event => deleteCharacter(group.id)}
             >
                 <span className="material-icons">close</span>
+            </Button>
+            <Button
+                className='DeleteGroupButton'
+                variant="outlined"
+                size="small"
+                onClick={event => duplicateUnit(group.id)}
+            >
+                <span className="material-icons">content_copy</span>
             </Button>
         </Box>
     );
@@ -41,7 +48,6 @@ export default function Groups(props: any) {
         units.push({
             id: uuidv4(),
             name: '',
-            count: 0,
             health: 0,
             bonus: 0,
             track: true,
@@ -59,22 +65,38 @@ export default function Groups(props: any) {
         units.splice(index, 1);
         props.onGroupChange(units);
     }
-    
+
+    const duplicateUnit = (id: string) => {
+        const units = [...props.units];
+        const duplicate = units.find((unit: Unit) => unit.id === id);
+        units.push({
+            id: uuidv4(),
+            name: duplicate.name,
+            health: duplicate.health,
+            bonus: duplicate.bonus,
+            track: duplicate.track,
+            initiative: 0,
+            player: false
+        });
+        console.log(units);
+        props.onGroupChange(units);
+    }
+
     return (
-        <div 
+        <div
             className='Groups'
-            style={{display: props.hidden === false ? 'grid' : 'none'}}
+            style={{ display: props.hidden === false ? 'grid' : 'none' }}
         >
             <Grid container spacing={5}>
                 <Grid item xs={10}>
-                    {groups.map((group: any, i: number) => {return groupBox(group, i)})}
+                    {groups.map((group: any, i: number) => { return groupBox(group, i) })}
                 </Grid>
             </Grid>
             <Grid container spacing={5}>
                 <Grid item xs={10}>
-                    <Button 
+                    <Button
                         className='AddGroupButton'
-                        variant="outlined" 
+                        variant="outlined"
                         size="small"
                         onClick={addGroup}
                     >

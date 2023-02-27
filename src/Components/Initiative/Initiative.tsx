@@ -20,17 +20,15 @@ class Initiative extends React.Component<diceProps> {
       units:[{
         id: '0',
         name: '',
-        count: 0,
         health: 0,
         bonus: 0,
-        track: true,
+        track: false,
         initiative: 0,
         player: false,
       },
       {
         id: '1',
         name: 'Jogn Man',
-        count: 1,
         health: 0,
         bonus: 0,
         track: true,
@@ -38,22 +36,15 @@ class Initiative extends React.Component<diceProps> {
         player: true,
       }],
     };
-    this.handleGroupChange = this.handleGroupChange.bind(this);
-    this.handlePartyChange = this.handlePartyChange.bind(this);
+    this.handleUnitChange = this.handleUnitChange.bind(this);
   }
 
-  handleGroupChange(value: any) {
-    // console.log(value);
+  handleUnitChange(value: any) {
     this.setState({
       units:value
     })
   }
 
-  handlePartyChange(value: any) {
-    this.setState({
-      units:value
-    })
-  }
 
   render() {
     const tab = (this.state as any).tab;
@@ -75,16 +66,17 @@ class Initiative extends React.Component<diceProps> {
           <Groups
             hidden={tab!=='groups'}
             units={this.state.units}
-            onGroupChange={this.handleGroupChange}
+            onGroupChange={this.handleUnitChange}
           />
           <Party
             hidden={tab!=='party'}
             units={this.state.units}
-            onPartyChange={this.handlePartyChange}
+            onPartyChange={this.handleUnitChange}
           />
           <Tracker
             hidden={tab!=='tracker'}
             units={this.state.units}
+            onUnitChange={this.handleUnitChange}
           />
         </div>
       </div>
