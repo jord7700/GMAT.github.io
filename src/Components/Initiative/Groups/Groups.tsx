@@ -2,8 +2,15 @@ import * as React from 'react';
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import { Unit } from 'src/Utils/types';
 import { v4 as uuidv4 } from 'uuid';
+import { Dispatch, useState } from 'react';
+
+interface duplicate {
+    id: string,
+    count: number
+}
 
 export default function Groups(props: any) {
+    const [duplcates, setDuplicates]: [duplicate[], Dispatch<React.SetStateAction<duplicate[]>>]  = useState<duplicate[]>([]);
     const groups = props.units.filter((unit: Unit) => unit.player === false);
 
     const handleChange = (id: string) => (event: any) => {
@@ -69,17 +76,31 @@ export default function Groups(props: any) {
     const duplicateUnit = (id: string) => {
         const units = [...props.units];
         const duplicate = units.find((unit: Unit) => unit.id === id);
+        const count = incrementDuplicate(duplicate.id);
         units.push({
             id: uuidv4(),
-            name: duplicate.name,
+            name: `${duplicate.name.split(' (')[0]} (${count})`,
             health: duplicate.health,
             bonus: duplicate.bonus,
             track: duplicate.track,
             initiative: 0,
             player: false
         });
-        console.log(units);
         props.onGroupChange(units);
+    }
+
+    const incrementDuplicate = (unit: Unit) => {
+        const allDups = [...duplcates];
+        const exists = allDups.find((dup) => (dup as any).id === unit.id);
+        if (exists) {
+            (exists as any).count++;
+            setDuplicates(allDups);
+            return (exists as any).count;
+        } else {
+            (allDups as any).push({id: unit.id, count: 1});
+            setDuplicates(allDups);
+            return 1;
+        }
     }
 
     return (
