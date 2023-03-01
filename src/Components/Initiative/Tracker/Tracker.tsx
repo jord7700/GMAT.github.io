@@ -9,7 +9,7 @@ export default function Tracker(
     }: any) {
     // create local copy of groups and party
     const [localHidden, sethidden] = React.useState(hidden);
-    const allUnits = units;
+    const allUnits = units.filter((unit: Unit) => unit.track === true);
 
     if (localHidden !== hidden) {
         sethidden(hidden);
